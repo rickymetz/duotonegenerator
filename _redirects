@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+https://cssduotone.netlify.com/* https://cssduotone.com/:splat 301!
