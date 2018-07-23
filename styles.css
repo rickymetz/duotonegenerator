@@ -19,11 +19,6 @@ img, object{
 
 .hl{
   color: var(--base);
-  letter-spacing: calc(var(--spacing) / 50);
-  margin-left: calc(var(--spacing) / 100);
-  margin-right: calc(var(--spacing) / 100);
-  filter: blur(var(--blur));
-  opacity: var(--opacity);
 }
 .hl:last-child{
   margin-right: 0;
