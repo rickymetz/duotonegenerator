@@ -184,7 +184,7 @@ input[type="file" i]{
   flex-direction: column;
   flex: 1 0 100%;
   margin-bottom: 1.5rem;
-  height: 100%;
+  height: auto;
 }
 
 .form-group.inline{
