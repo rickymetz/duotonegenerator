@@ -463,16 +463,15 @@
     premades.forEach( premade => premade.addEventListener('click', handleClickUpdate)); //Attach click listener on each premade buttons that triggers function
 
     // Get new random img
-    const img_url = "https://picsum.photos/1000?image=";
+    const img_url = "https://picsum.photos/1000?random";
     const img_element = document.getElementById('img-src');
     const codepen_img_element = document.getElementById('random-img');
     const new_img_btn = document.getElementById('new-img-btn');
 
-    new_img_btn.addEventListener('click', function(){
-      const img_index = Math.floor(Math.random() * (1000 - 2 + 1) + 2);
-      const randomImg = img_url + img_index; //add a random image index beetween 1 and 999
-      codepen_img_element.innerHTML = randomImg;
-      img_element.setAttribute("data", randomImg);
+    new_img_btn.addEventListener('click', async function() {
+      const response = await fetch(img_url);
+      codepen_img_element.textContent = response.url;
+      img_element.setAttribute("data", response.url);
       document.querySelector('input[type="file"]').value = ""; //reset file upload if user has previously uploaded an image before hitting random
     });
 
