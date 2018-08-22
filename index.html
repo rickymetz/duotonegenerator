@@ -343,8 +343,8 @@
           document.getElementById("var-bg-blend").innerHTML = "multiply";
           document.getElementById("var-fg-blend").innerHTML = "lighten";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#f7392b");
-          fg.setAttribute("value", "#16006f");
+          bg.value = "#f7392b";
+          fg.value = "#16006f";
           document.querySelector('#bg-blend [data-filter="multiply"]').selected = true;
           document.querySelector('#fg-blend [data-filter="lighten"]').selected = true;
           opacity.value = 1;
@@ -360,8 +360,8 @@
           document.getElementById("var-bg-blend").innerHTML = "multiply";
           document.getElementById("var-fg-blend").innerHTML = "lighten";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#08b76c");
-          fg.setAttribute("value", "#0a3463");
+          bg.value = "#08b76c";
+          fg.value = "#0a3463";
           document.querySelector('#bg-blend [data-filter="multiply"]').selected = true;
           document.querySelector('#fg-blend [data-filter="lighten"]').selected = true;
           opacity.value = 1;
@@ -377,8 +377,8 @@
           document.getElementById("var-bg-blend").innerHTML = "color-burn";
           document.getElementById("var-fg-blend").innerHTML = "screen";
           document.getElementById("var-opacity").innerHTML = "0.8";
-          bg.setAttribute("value", "#e9e9d2");
-          fg.setAttribute("value", "#514442");
+          bg.value = "#e9e9d2";
+          fg.value = "#514442";
           document.querySelector('#bg-blend [data-filter="color-burn"]').selected = true;
           document.querySelector('#fg-blend [data-filter="screen"]').selected = true;
           opacity.value = 0.8;
@@ -394,8 +394,8 @@
           document.getElementById("var-bg-blend").innerHTML = "overlay";
           document.getElementById("var-fg-blend").innerHTML = "color-burn";
           document.getElementById("var-opacity").innerHTML = "0.5";
-          bg.setAttribute("value", "#8c9da4");
-          fg.setAttribute("value", "#618cf5");
+          bg.value = "#8c9da4";
+          fg.value = "#618cf5";
           document.querySelector('#bg-blend [data-filter="overlay"]').selected = true;
           document.querySelector('#fg-blend [data-filter="color-burn"]').selected = true;
           opacity.value = 0.5;
@@ -411,8 +411,8 @@
           document.getElementById("var-bg-blend").innerHTML = "unset";
           document.getElementById("var-fg-blend").innerHTML = "color-burn";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#000000");
-          fg.setAttribute("value", "#c35655");
+          bg.value = "#000000";
+          fg.value = "#c35655";
           opacity.value = 1;
           document.querySelector('#bg-blend [data-filter="unset"]').selected = true;
           document.querySelector('#fg-blend [data-filter="screen"]').selected = true;
@@ -428,8 +428,8 @@
           document.getElementById("var-bg-blend").innerHTML = "screen";
           document.getElementById("var-fg-blend").innerHTML = "exclusion";
           document.getElementById("var-opacity").innerHTML = "0.7";
-          bg.setAttribute("value", "#000000");
-          fg.setAttribute("value", "#1d1d37");
+          bg.value = "#000000";
+          fg.value = "#1d1d37";
           opacity.value = 0.7;
           document.querySelector('#bg-blend [data-filter="screen"]').selected = true;
           document.querySelector('#fg-blend [data-filter="exclusion"]').selected = true;
@@ -450,8 +450,8 @@
           document.getElementById("var-bg-blend").innerHTML = `${random_bg_blend}`;
           document.getElementById("var-fg-blend").innerHTML = `${random_fg_blend}`;
           document.getElementById("var-opacity").innerHTML = `${random_opacity}`;
-          bg.setAttribute("value", random_bg);
-          fg.setAttribute("value", random_fg);
+          bg.value = random_bg;
+          fg.value = random_fg;
           opacity.value = random_opacity;
           document.querySelector('#bg-blend [data-filter="' + random_bg_blend + '"]').selected = true;
           document.querySelector('#fg-blend [data-filter="' + random_fg_blend + '"]').selected = true;
