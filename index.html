@@ -142,7 +142,8 @@
               <button class="premade" data-filter="blade-runner">Blade Runner</button>
               <button class="premade" data-filter="laworder">Law & Order</button>
               <button class="premade" data-filter="moody">Moody</button>
-              <button class="premade" data-filter="random">Randomize</button>
+              <button class="premade" data-filter="ursula">Ursula</button>
+              <button class="premade" data-filter="random">Random</button>
             </div>
           </div>
           <div class="form-group inline">
@@ -434,6 +435,23 @@
           opacity.value = 0.7;
           document.querySelector('#bg-blend [data-filter="screen"]').selected = true;
           document.querySelector('#fg-blend [data-filter="exclusion"]').selected = true;
+          break;
+        case 'ursula':
+          root.style.setProperty("--base", "#9630c3");
+          root.style.setProperty("--foreground", "#45c7ab");
+          root.style.setProperty("--bg-blend", "lighten");
+          root.style.setProperty("--fg-blend", "soft-light");
+          root.style.setProperty("--opacity", "1");
+          document.getElementById("var-base").innerHTML = "#9630c3";
+          document.getElementById("var-foreground").innerHTML = "#45c7ab";
+          document.getElementById("var-bg-blend").innerHTML = "lighten";
+          document.getElementById("var-fg-blend").innerHTML = "soft-light";
+          document.getElementById("var-opacity").innerHTML = "1";
+          bg.setAttribute("value", "#9630c3");
+          fg.setAttribute("value", "#45c7ab");
+          opacity.value = 1;
+          document.querySelector('#bg-blend [data-filter="lighten"]').selected = true;
+          document.querySelector('#fg-blend [data-filter="soft-light"]').selected = true;
           break;
         case 'random':
           const random_bg = "#" + Math.floor(Math.random()*16777215).toString(16);
