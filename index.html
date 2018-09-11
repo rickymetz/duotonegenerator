@@ -62,32 +62,32 @@
           </div>
           <div class="form-group">
             <label for="zoom">Zoom</label>
-            <input id="zoom" type="range" name="zoom" min="0.25" max="1" value="1" step="0.01" list="ticks">
+            <input id="zoom" class="css-var" type="range" name="zoom" min="0.25" max="1" value="1" step="0.01" list="ticks">
           </div>
 
           <div class="form-group">
             <label for="spacing">Spacing:</label>
-            <input id="spacing" type="range" name="spacing" min="0" max="100" value="20" step="1" data-sizing="px">
+            <input id="spacing" class="css-var" type="range" name="spacing" min="0" max="100" value="20" step="1" data-sizing="px">
           </div>
 
           <div class="form-group">
             <label for="blur">Blur:</label>
-            <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
+            <input id="blur" class="css-var" type="range" name="blur" min="0" max="25" value="0" data-sizing="px">
           </div>
 
           <div class="form-group">
             <label for="opacity">Image Opacity:</label>
-            <input id="opacity" type="range" name="opacity" min="0" max="1" value="1" step="0.01">
+            <input id="opacity" class="css-var" type="range" name="opacity" min="0" max="1" value="1" step="0.01">
           </div>
 
           <div class="form-group">
             <label for="foreground">Image Color:</label>
-            <input id="foreground" type="color" name="foreground" value="#16006f">
+            <input id="foreground" class="css-var" type="color" name="foreground" value="#16006f">
           </div>
 
           <div class="form-group">
             <label for="fg-bled">Image Blend Mode:</label>
-            <select id="fg-blend" name="fg-blend">
+            <select id="fg-blend" class="css-var" name="fg-blend">
               <option data-filter="unset">unset</option>
               <option data-filter="multiply">multiply</option>
               <option data-filter="screen">screen</option>
@@ -109,12 +109,12 @@
 
           <div class="form-group">
             <label for="base">Background Color:</label>
-            <input id="base" type="color" name="base" value="#f7392b">
+            <input id="base" class="css-var" type="color" name="base" value="#f7392b">
           </div>
 
           <div class="form-group">
             <label for="bg-blend">Background Blend Mode:</label>
-            <select id="bg-blend" name="bg-blend">
+            <select id="bg-blend" class="css-var" name="bg-blend">
               <option data-filter="unset">unset</option>
               <option data-filter="multiply" selected>multiply</option>
               <option data-filter="screen">screen</option>
@@ -248,18 +248,18 @@
     <div id="modal-screen" class="modal-screen"></div>
   </div>
   <script>
-    const inputs = document.querySelectorAll('.controls input');
-    const selects = document.querySelectorAll('.controls select');
+    const inputs = document.querySelectorAll('.controls input.css-var');
+    const selects = document.querySelectorAll('.controls select.css-var');
 
     function handleUpdate() {
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-      document.getElementById(`var-${this.name}`).innerHTML = `${this.value + suffix}`;
+      const cssVarElem = document.getElementById(`var-${this.name}`);
+      if (!cssVarElem) return;
+      cssVarElem.textContent = `${this.value + suffix}`;
     }
 
-    inputs.forEach( input => input.addEventListener('change', handleUpdate));
-    inputs.forEach( input => input.addEventListener('mousemove', handleUpdate));
-
+    inputs.forEach( input => input.addEventListener('input', handleUpdate));
     selects.forEach( select => select.addEventListener('change', handleUpdate));
 
     var element = document.getElementById('img-form');
@@ -268,11 +268,13 @@
     // File upload
     window.addEventListener('load', function() {
       document.querySelector('input[type="file"]').addEventListener('change', function() {
-          if (this.files && this.files[0]) {
-              var img = document.getElementById('img-src');
-              img.data = URL.createObjectURL(this.files[0]); // set object data to file url
-              img.onload = imageIsLoaded; // optional onload event listener
-          }
+        if (this.files && this.files[0]) {
+          const img = document.getElementById('img-src');
+          const url = URL.createObjectURL(this.files[0]);
+          URL.revokeObjectURL(img.data);
+          img.data = url; // set object data to file url
+          img.onload = imageIsLoaded; // optional onload event listener
+        }
       });
     });
 
@@ -323,11 +325,8 @@
       "color",
       "luminosity"
     ];
-    const random_bg = "#" + Math.floor(Math.random()*16777215).toString(16);
-    const random_fg = "#" + Math.floor(Math.random()*16777215).toString(16);
-    const random_opacity = Math.random() * (1 - .5) + .5;
-    const random_bg_blend = blendArray[Math.floor(Math.random()*blendArray.length)];
-    const random_fg_blend = blendArray[Math.floor(Math.random()*blendArray.length)];
+    const get_rand_int = (max) => Math.floor(Math.random() * max);
+    const get_rand_color = () => '#' + get_rand_int(1 + 0xffffff).toString(16).padStart(6, '0');
 
     function handleClickUpdate(e) {
       e.preventDefault();
@@ -344,8 +343,8 @@
           document.getElementById("var-bg-blend").innerHTML = "multiply";
           document.getElementById("var-fg-blend").innerHTML = "lighten";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#f7392b");
-          fg.setAttribute("value", "#16006f");
+          bg.value = "#f7392b";
+          fg.value = "#16006f";
           document.querySelector('#bg-blend [data-filter="multiply"]').selected = true;
           document.querySelector('#fg-blend [data-filter="lighten"]').selected = true;
           opacity.value = 1;
@@ -361,8 +360,8 @@
           document.getElementById("var-bg-blend").innerHTML = "multiply";
           document.getElementById("var-fg-blend").innerHTML = "lighten";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#08b76c");
-          fg.setAttribute("value", "#0a3463");
+          bg.value = "#08b76c";
+          fg.value = "#0a3463";
           document.querySelector('#bg-blend [data-filter="multiply"]').selected = true;
           document.querySelector('#fg-blend [data-filter="lighten"]').selected = true;
           opacity.value = 1;
@@ -378,8 +377,8 @@
           document.getElementById("var-bg-blend").innerHTML = "color-burn";
           document.getElementById("var-fg-blend").innerHTML = "screen";
           document.getElementById("var-opacity").innerHTML = "0.8";
-          bg.setAttribute("value", "#e9e9d2");
-          fg.setAttribute("value", "#514442");
+          bg.value = "#e9e9d2";
+          fg.value = "#514442";
           document.querySelector('#bg-blend [data-filter="color-burn"]').selected = true;
           document.querySelector('#fg-blend [data-filter="screen"]').selected = true;
           opacity.value = 0.8;
@@ -395,8 +394,8 @@
           document.getElementById("var-bg-blend").innerHTML = "overlay";
           document.getElementById("var-fg-blend").innerHTML = "color-burn";
           document.getElementById("var-opacity").innerHTML = "0.5";
-          bg.setAttribute("value", "#8c9da4");
-          fg.setAttribute("value", "#618cf5");
+          bg.value = "#8c9da4";
+          fg.value = "#618cf5";
           document.querySelector('#bg-blend [data-filter="overlay"]').selected = true;
           document.querySelector('#fg-blend [data-filter="color-burn"]').selected = true;
           opacity.value = 0.5;
@@ -412,8 +411,8 @@
           document.getElementById("var-bg-blend").innerHTML = "unset";
           document.getElementById("var-fg-blend").innerHTML = "color-burn";
           document.getElementById("var-opacity").innerHTML = "1";
-          bg.setAttribute("value", "#000000");
-          fg.setAttribute("value", "#c35655");
+          bg.value = "#000000";
+          fg.value = "#c35655";
           opacity.value = 1;
           document.querySelector('#bg-blend [data-filter="unset"]').selected = true;
           document.querySelector('#fg-blend [data-filter="screen"]').selected = true;
@@ -429,18 +428,18 @@
           document.getElementById("var-bg-blend").innerHTML = "screen";
           document.getElementById("var-fg-blend").innerHTML = "exclusion";
           document.getElementById("var-opacity").innerHTML = "0.7";
-          bg.setAttribute("value", "#000000");
-          fg.setAttribute("value", "#1d1d37");
+          bg.value = "#000000";
+          fg.value = "#1d1d37";
           opacity.value = 0.7;
           document.querySelector('#bg-blend [data-filter="screen"]').selected = true;
           document.querySelector('#fg-blend [data-filter="exclusion"]').selected = true;
           break;
         case 'random':
-          const random_bg = "#" + Math.floor(Math.random()*16777215).toString(16);
-          const random_fg = "#" + Math.floor(Math.random()*16777215).toString(16);
+          const random_bg = get_rand_color();
+          const random_fg = get_rand_color();
           const random_opacity = Math.random() * (1 - .5) + .5;
-          const random_bg_blend = blendArray[Math.floor(Math.random()*blendArray.length)];
-          const random_fg_blend = blendArray[Math.floor(Math.random()*blendArray.length)];
+          const random_bg_blend = blendArray[get_rand_int(blendArray.length)];
+          const random_fg_blend = blendArray[get_rand_int(blendArray.length)];
           root.style.setProperty("--base", random_bg);
           root.style.setProperty("--foreground", random_fg);
           root.style.setProperty("--bg-blend", random_bg_blend);
@@ -451,8 +450,8 @@
           document.getElementById("var-bg-blend").innerHTML = `${random_bg_blend}`;
           document.getElementById("var-fg-blend").innerHTML = `${random_fg_blend}`;
           document.getElementById("var-opacity").innerHTML = `${random_opacity}`;
-          bg.setAttribute("value", random_bg);
-          fg.setAttribute("value", random_fg);
+          bg.value = random_bg;
+          fg.value = random_fg;
           opacity.value = random_opacity;
           document.querySelector('#bg-blend [data-filter="' + random_bg_blend + '"]').selected = true;
           document.querySelector('#fg-blend [data-filter="' + random_fg_blend + '"]').selected = true;
@@ -464,23 +463,16 @@
     premades.forEach( premade => premade.addEventListener('click', handleClickUpdate)); //Attach click listener on each premade buttons that triggers function
 
     // Get new random img
-    const img_url = "https://picsum.photos/1000?image=";
+    const img_url = "https://picsum.photos/1000?random";
     const img_element = document.getElementById('img-src');
     const codepen_img_element = document.getElementById('random-img');
     const new_img_btn = document.getElementById('new-img-btn');
 
-    new_img_btn.addEventListener('click', function(){
-      randomImg = img_url + (Math.floor(Math.random()*(1000-2+1)+2)); //add a random width param between 1000px and 300px
-      const http = new XMLHttpRequest();
-        http.open('HEAD', randomImg, false);
-        http.send();
-      if (http.status != 404){
-        codepen_img_element.innerHTML = randomImg;
-        img_element.setAttribute("data", randomImg); //add a random width param between 1000px and 300px
-        document.querySelector('input[type="file"]').value = ""; //reset file upload if user has previous uploaded an image before hitting random
-      } else{
-         window.location.reload();
-      }
+    new_img_btn.addEventListener('click', async function() {
+      const response = await fetch(img_url);
+      codepen_img_element.textContent = response.url;
+      img_element.setAttribute("data", response.url);
+      document.querySelector('input[type="file"]').value = ""; //reset file upload if user has previously uploaded an image before hitting random
     });
 
     // Launch modal window
