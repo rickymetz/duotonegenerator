@@ -53,10 +53,6 @@ kbd{
   color: #9d9d9d;
 }
 
-small kbd{
-  display: span;
-}
-
 .container{
   display: inline-flex;
   justify-content: center;
