@@ -182,7 +182,7 @@
           <input id="codepen-submit" type="submit" value="Open in CodePen" class="codepen-mover-button">
 
         </form>
-        <button id="copy-to-clipboard" class="button">Copy to Clipboard</button>
+        <button id="copy-to-clipboard" data-clipboard-text class="button">Copy to Clipboard</button>
         <button id="hide-modal-screen" class="button">Close Modal</button>
       </div>
 <pre class="codepen-able">
@@ -528,8 +528,8 @@
 
     // Codepen Object
     const data = {
-     title              : "My Duotone",
-     description        : "Created using Duotone Generator",
+     title              : "My CSSDuotone",
+     description        : "Created using CSSduotone.com/",
      html               : "",
      css                : "",
      editors            : "110",
@@ -538,13 +538,16 @@
 
     const codepenSubmit = document.getElementById('codepen-submit');
 
+    // Get the text inside the code tag
+    const htmlCode = document.getElementById('html-code').innerHTML;
+    const cssCode = document.getElementById('css-code').innerHTML;
+    // Strip html first
+    const strippedCSS = strip(cssCode);
+    const strippedHTML = strip(htmlCode);
+    //Combined HTML + CSS
+    const strippedCode = "<style> \n" + strippedCSS + "\n </style> \n" + strippedHTML;
+
     codepenSubmit.addEventListener('click', function(e){
-      // Get the text inside the code tag
-      const htmlCode = document.getElementById('html-code').innerHTML;
-      const cssCode = document.getElementById('css-code').innerHTML;
-      // Strip html first
-      const strippedCSS = strip(cssCode);
-      const strippedHTML = strip(htmlCode);
       data.css = strippedCSS;
       data.html = strippedHTML;
       // Replace Quotes and Set Object as String
@@ -552,6 +555,23 @@
       // Get Input and Append Data String
       const data_input = document.getElementById('codepen-input');
       data_input.value = dataString;
+    });
+
+    // Copy code to Clipboard
+    var copyBtn = document.getElementById('copy-to-clipboard');
+    copyBtn.setAttribute('data-clipboard-text', strippedCode);
+    var clipboard = new ClipboardJS(copyBtn);
+    clipboard.on('success', function(e) {
+        copyBtn.classList.add('copied');
+        setTimeout(function(){
+          copyBtn.classList.remove('copied');
+        }, 2000);
+    });
+    clipboard.on('error', function(e) {
+      copyBtn.classList.add('copy-error');
+      setTimeout(function(){
+        copyBtn.classList.remove('copy-error');
+      }, 2000);
     });
 
 

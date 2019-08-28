@@ -220,6 +220,48 @@ input[type="file" i]{
   margin: 0 10px 10px 0;
   transition: transform .25s ease, box-shadow .125s ease;
   text-decoration: none;
+  line-height: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.button.copied::after {
+  content: "✓ Copied";
+  position: absolute;
+  color: green;
+  font-size: .75em;
+  right: 0;
+  transform: translateX(100%);
+  padding: 4px 0px;
+  top: 0;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  animation: slidein 2s ease-in forwards;
+}
+
+.button.copy-error::after {
+  content: "Error, couldn't copy";
+  position: absolute;
+  color: red;
+  font-size: .75em;
+  right: 0;
+  transform: translateX(100%);
+  padding: 4px 0px;
+  top: 0;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  animation: slidein 2s ease-in forwards;
+}
+
+@keyframes slidein {
+  20% {
+    opacity: 1;
+    transform: translateX(calc(110%));
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(calc(110%));
+  }
 }
 
 .shameless-plug{
