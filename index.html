@@ -538,16 +538,16 @@
 
     const codepenSubmit = document.getElementById('codepen-submit');
 
-    // Get the text inside the code tag
-    const htmlCode = document.getElementById('html-code').innerHTML;
-    const cssCode = document.getElementById('css-code').innerHTML;
-    // Strip html first
-    const strippedCSS = strip(cssCode);
-    const strippedHTML = strip(htmlCode);
-    //Combined HTML + CSS
-    const strippedCode = "<style> \n" + strippedCSS + "\n </style> \n" + strippedHTML;
 
     codepenSubmit.addEventListener('click', function(e){
+      // Get the text inside the code tag
+      const htmlCode = document.getElementById('html-code').innerHTML;
+      const cssCode = document.getElementById('css-code').innerHTML;
+      // Strip html first
+      const strippedCSS = strip(cssCode);
+      const strippedHTML = strip(htmlCode);
+      //Combined HTML + CSS
+      const strippedCode = "<style> \n" + strippedCSS + "\n </style> \n" + strippedHTML;
       data.css = strippedCSS;
       data.html = strippedHTML;
       // Replace Quotes and Set Object as String
@@ -559,7 +559,17 @@
 
     // Copy code to Clipboard
     var copyBtn = document.getElementById('copy-to-clipboard');
-    copyBtn.setAttribute('data-clipboard-text', strippedCode);
+    copyBtn.addEventListener("click", function() {
+      // Get the text inside the code tag
+      const htmlCode = document.getElementById('html-code').innerHTML;
+      const cssCode = document.getElementById('css-code').innerHTML;
+      // Strip html first
+      const strippedCSS = strip(cssCode);
+      const strippedHTML = strip(htmlCode);
+      //Combined HTML + CSS
+      const strippedCode = "<style> \n" + strippedCSS + "\n </style> \n" + strippedHTML;
+      copyBtn.setAttribute('data-clipboard-text', strippedCode);
+    });
     var clipboard = new ClipboardJS(copyBtn);
     clipboard.on('success', function(e) {
         copyBtn.classList.add('copied');
