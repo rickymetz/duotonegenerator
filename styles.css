@@ -218,7 +218,7 @@ input[type="file" i]{
   border-radius: 4px;
   flex: 0 0 auto;
   margin: 0 10px 10px 0;
-  transition: all .25s ease;
+  transition: transform .25s ease, box-shadow .125s ease;
   text-decoration: none;
 }
 
@@ -273,6 +273,11 @@ input[type="file" i]{
   background: #9d9d9d;
   color: black;
   transform: translateY(-2px);
+}
+
+.button-group button:active, .button:active, .codepen-mover-button:active{
+  transform: translateY(0px);
+  box-shadow: inset 0 0 .25rem black;
 }
 
 
