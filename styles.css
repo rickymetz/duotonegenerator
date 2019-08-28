@@ -261,11 +261,15 @@ input[type="file" i]{
 }
 
 .code-header form{
-  margin-right: auto;
+  margin-right: 1rem;
   margin-left: 1rem;
 }
 
-.button-group button:hover{
+.code-header .button:last-child {
+  margin-left: auto;
+}
+
+.button-group button:hover, .button:hover, .codepen-mover-button:hover{
   background: #9d9d9d;
   color: black;
   transform: translateY(-2px);
