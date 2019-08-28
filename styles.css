@@ -218,8 +218,50 @@ input[type="file" i]{
   border-radius: 4px;
   flex: 0 0 auto;
   margin: 0 10px 10px 0;
-  transition: all .25s ease;
+  transition: transform .25s ease, box-shadow .125s ease;
   text-decoration: none;
+  line-height: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.button.copied::after {
+  content: "✓ Copied";
+  position: absolute;
+  color: green;
+  font-size: .75em;
+  right: 0;
+  transform: translateX(100%);
+  padding: 4px 0px;
+  top: 0;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  animation: slidein 2s ease-in forwards;
+}
+
+.button.copy-error::after {
+  content: "Error, couldn't copy";
+  position: absolute;
+  color: red;
+  font-size: .75em;
+  right: 0;
+  transform: translateX(100%);
+  padding: 4px 0px;
+  top: 0;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  animation: slidein 2s ease-in forwards;
+}
+
+@keyframes slidein {
+  20% {
+    opacity: 1;
+    transform: translateX(calc(110%));
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(calc(110%));
+  }
 }
 
 .shameless-plug{
@@ -261,14 +303,23 @@ input[type="file" i]{
 }
 
 .code-header form{
-  margin-right: auto;
+  margin-right: 1rem;
   margin-left: 1rem;
 }
 
-.button-group button:hover{
+.code-header .button:last-child {
+  margin-left: auto;
+}
+
+.button-group button:hover, .button:hover, .codepen-mover-button:hover{
   background: #9d9d9d;
   color: black;
   transform: translateY(-2px);
+}
+
+.button-group button:active, .button:active, .codepen-mover-button:active{
+  transform: translateY(0px);
+  box-shadow: inset 0 0 .25rem black;
 }
 
 
